@@ -37,14 +37,16 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [displayLocation, setDisplayLocation] = useState("");
   const [weather, setWeather] = useState({});
+  const [savedLocation, setSavedLocation] = useState("");
+  const [savedLocationsList, setSavedLocationsList] = useState([]);
 
-  const fetchWeather = async () => {
-    if (location.length < 2) return setWeather({});
+  const fetchWeather = async (loc) => {
+    if (loc.length < 2) return setWeather({});
 
     try {
       setIsLoading(true);
       const geoRes = await fetch(
-        `https://geocoding-api.open-meteo.com/v1/search?name=${location}`
+        `https://geocoding-api.open-meteo.com/v1/search?name=${loc}`
       );
       const geoData = await geoRes.json();
 
@@ -68,36 +70,115 @@ function App() {
 
   useEffect(() => {
     setLocation(localStorage.getItem("location") || "");
+    setSavedLocation(localStorage.getItem("savedLocation") || "");
+    setSavedLocationsList(
+      JSON.parse(localStorage.getItem("savedLocationsList")) || []
+    );
   }, []);
 
   useEffect(() => {
     if (location) {
-      fetchWeather();
+      fetchWeather(location);
       localStorage.setItem("location", location);
     }
   }, [location]);
 
   const handleLocationChange = (e) => setLocation(e.target.value);
 
+  const handleSaveLocation = () => {
+    if (location) {
+      setSavedLocation(location);
+      setSavedLocationsList((prevList) => [...prevList, location]);
+      localStorage.setItem("savedLocation", location);
+      localStorage.setItem(
+        "savedLocationsList",
+        JSON.stringify([...savedLocationsList, location])
+      );
+    }
+  };
+
+  // const handleUpdateLocation = () => {
+  //   if (savedLocation) {
+  //     setLocation(savedLocation);
+  //   }
+  // };
+
+  const handleDeleteLocation = () => {
+    const updatedLocationsList = savedLocationsList.filter(
+      (loc) => loc !== savedLocation
+    );
+    setSavedLocationsList(updatedLocationsList);
+    setSavedLocation("");
+    localStorage.removeItem("savedLocation");
+    localStorage.setItem(
+      "savedLocationsList",
+      JSON.stringify(updatedLocationsList)
+    );
+  };
+  const handleRemoveLocation = (index) => {
+    const updatedLocationsList = [...savedLocationsList];
+    updatedLocationsList.splice(index, 1);
+    setSavedLocationsList(updatedLocationsList);
+    localStorage.setItem(
+      "savedLocationsList",
+      JSON.stringify(updatedLocationsList)
+    );
+  };
   return (
     <div className="app">
-      <h1>Classy Weather</h1>
-      <Input location={location} onChangeLocation={handleLocationChange} />
+      <h1>ForeCastify</h1>
+      <Input
+        location={location}
+        onChangeLocation={handleLocationChange}
+        onSaveLocation={handleSaveLocation}
+        // onUpdateLocation={handleUpdateLocation}
+        onDeleteLocation={handleDeleteLocation}
+        savedLocations={savedLocationsList}
+        onRemoveLocation={handleRemoveLocation}
+      />
       {isLoading && <p className="loader">Loading...</p>}
-      {weather.weathercode && <Weather weather={weather} location={location} />}
+      {weather && weather.weathercode && (
+        <Weather weather={weather} location={location} />
+      )}
     </div>
   );
 }
 
-function Input({ location, onChangeLocation }) {
+function Input({
+  location,
+  onChangeLocation,
+  onSaveLocation,
+  // onUpdateLocation,
+  onDeleteLocation,
+  savedLocations,
+  onRemoveLocation,
+}) {
+  const handleRemoveLocation = (index) => {
+    onRemoveLocation(index);
+  };
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="Search from Location"
-        value={location}
-        onChange={onChangeLocation}
-      />
+    <div className="input-container">
+      <div className="input-wrapper">
+        <input
+          type="text"
+          placeholder="Search from Location"
+          value={location}
+          onChange={onChangeLocation}
+        />
+        <ul className="savedlocation">
+          {savedLocations.map((loc, index) => (
+            <>
+              <li key={index}>{loc}</li>
+              <span onClick={() => handleRemoveLocation(index)}> &#x2613;</span>
+            </>
+          ))}
+        </ul>
+      </div>
+      <div className="button-container">
+        <button onClick={onSaveLocation}>Add</button>
+        {/* <button onClick={onUpdateLocation}>Update</button> */}
+        <button onClick={onDeleteLocation}>Delete</button>
+      </div>
     </div>
   );
 }
