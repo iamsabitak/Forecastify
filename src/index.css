@@ -26,7 +26,7 @@ body {
   width: 112rem;
   gap: 4rem;
   padding: 6rem 0;
-  border: 2px solid #464242; /* Light gray border */
+  border: 2px solid #524e4e; /* Light gray border */
   outline: 2px solid #2f2d2d; /* White outline */
   outline-offset: 1.2rem;
   background-color: #a4cdf0; /* Lighter sky blue background for the app */
@@ -50,9 +50,10 @@ input {
   font-family: inherit;
   color: inherit;
   font-size: 2rem;
-  background-color: #b6d9e4; /* Light sky blue input background color */
+  background-color: #c2e8f4; /* Light sky blue input background color */
   padding: 1.6rem 3.2rem;
   border: none;
+  border-radius: 5px;
   width: 32rem;
 }
 
@@ -91,4 +92,73 @@ input:focus {
   font-size: 2.4rem;
   font-weight: 700;
   color: #000000; /* Black text color */
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-container input {
+  margin-bottom: 10px;
+  font-size: 1.6rem;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  padding: 8px 16px;
+  font-size: 1.6rem;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: #d4ebf2;
+  border: 2px solid #d4ebf2;
+  font-family: monospace;
+}
+
+.button-container button:hover {
+  background-color: #a4cdf0;
+  border: 2px solid #fff;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-wrapper input {
+  padding-right: 80px;
+}
+
+.savedlocation {
+  list-style: none;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 36rem;
+  width: 100%;
+  background: #a4cdf0;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  max-height: 160px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  font-size: 1.6rem;
+}
+.savedlocation li {
+  margin-left: 1rem;
+  margin-top: 10px;
+}
+.savedlocation span {
+  display: block;
+  text-align: right;
+  color: rgb(230, 8, 8);
+  font-weight: bolder;
+  margin-right: 1.9rem;
+  position: relative;
+  top: -14px;
+  cursor: pointer;
 }
