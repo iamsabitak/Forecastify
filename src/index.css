@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap");
-
 * {
   margin: 0;
   padding: 0;
@@ -11,11 +9,11 @@ html {
 }
 
 body {
-  font-family: "Cinzel Decorative", cursive;
+  font-family: monospace;
   font-size: 2rem;
   height: 100vh;
-  color: #222;
-  background-color: #eabfb9;
+  color: #000000; /* Black text color */
+  background-color: #d4ebf2; /* Light sky blue background color */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,9 +26,10 @@ body {
   width: 112rem;
   gap: 4rem;
   padding: 6rem 0;
-  border: 2px solid #222;
-  outline: 2px solid #222;
+  border: 2px solid #464242; /* Light gray border */
+  outline: 2px solid #2f2d2d; /* White outline */
   outline-offset: 1.2rem;
+  background-color: #a4cdf0; /* Lighter sky blue background for the app */
 }
 
 h1 {
@@ -38,25 +37,27 @@ h1 {
   font-size: 6rem;
   letter-spacing: 2px;
   word-spacing: 5px;
+  color: #000000; /* Black text color */
 }
 
 h2 {
   text-align: center;
   margin-bottom: 2.4rem;
+  color: #000000; /* Black text color */
 }
 
 input {
   font-family: inherit;
   color: inherit;
   font-size: 2rem;
-  background-color: #f0d2ce;
+  background-color: #b6d9e4; /* Light sky blue input background color */
   padding: 1.6rem 3.2rem;
   border: none;
   width: 32rem;
 }
 
 input:focus {
-  outline: 2px solid #222;
+  outline: 2px solid #fff; /* White outline on focus */
 }
 
 .weather {
@@ -66,7 +67,7 @@ input:focus {
 }
 
 .day {
-  background-color: #f0d2ce;
+  background-color: #b6d9e4; /* Light sky blue background for each day */
   padding: 1.6rem 0 2rem;
   width: 12.8rem;
 
@@ -82,11 +83,12 @@ input:focus {
 }
 
 .day.important {
-  background-color: #ecc5c0;
-  outline: 2px solid #222;
+  background-color: #cfeaf7; /* Slightly different shade for important days */
+  outline: 2px solid #fff; /* White outline for important days */
 }
 
 .loader {
   font-size: 2.4rem;
   font-weight: 700;
+  color: #000000; /* Black text color */
 }
